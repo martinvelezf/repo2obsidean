@@ -2,6 +2,8 @@
 
 Transform code repositories into Obsidian vaults — one markdown note per class and method, with wikilinks connecting callers, callees, and inheritance relationships.
 
+Eveyone is welcome to contribute to this repository and built a crazy open source package
+
 ## Why?
 
 - **Token efficiency**: Instead of reading a whole repository file (20k tokens), agents fetch just the relevant symbol's note (200–500 tokens). Per-symbol notes are individually addressable, unlike a repomix bundle.
