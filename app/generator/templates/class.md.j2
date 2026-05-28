@@ -1,0 +1,96 @@
+---
+name: {{ symbol.qualified_name }}
+kind: class
+language: {{ symbol.language.value }}
+file: {{ symbol.file }}
+line: {{ symbol.start_line }}
+tags: [code, {{ symbol.language.value }}, class{% if changed %}, changed{% endif %}]
+{% if changed %}
+changed: true
+change_status: {{ change_status }}
+{% endif %}
+aliases:
+{% for alias in aliases %}
+  - {{ alias }}
+{% endfor %}
+---
+
+# {{ symbol.name }}
+
+{{ symbol.docstring }}
+
+{% if changed %}
+> [!warning] Changed since git HEAD — status `{{ change_status }}`
+
+{% if change_diff %}
+```diff
+{{ change_diff }}
+```
+
+{% endif %}
+{% endif %}
+{% if odoo_model or odoo_inherit or odoo_inherits %}
+## Odoo model
+
+{% if odoo_model %}
+- **`_name`**: `{{ odoo_model }}`
+{% endif %}
+{% if odoo_inherit %}
+- **`_inherit`**: {% for m in odoo_inherit %}`{{ m }}`{% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endif %}
+{% if odoo_inherits %}
+- **`_inherits`** (delegation): {% for m in odoo_inherits %}`{{ m }}`{% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endif %}
+See [[odoo-models]] for the full inheritance map.
+
+{% endif %}
+## Signature
+
+```{{ symbol.language.value }}
+{{ symbol.signature }}
+```
+
+{% if symbol.source_snippet %}
+## Source
+
+<details>
+<summary>Show full definition</summary>
+
+```{{ symbol.language.value }}
+{{ symbol.source_snippet }}
+```
+
+</details>
+{% endif %}
+
+{% if symbol.decorators %}
+## Decorators
+
+{% for decorator in symbol.decorators %}
+- `@{{ decorator }}`
+{% endfor %}
+
+{% endif %}
+
+{% if callees %}
+## Calls
+
+{{ callees }}
+
+{% endif %}
+
+{% if callers %}
+## Called by
+
+{{ callers }}
+
+{% endif %}
+
+{% if related %}
+## Related
+
+{{ related }}
+
+{% endif %}

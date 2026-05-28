@@ -1,0 +1,89 @@
+---
+name: {{ symbol.qualified_name }}
+kind: method
+language: {{ symbol.language.value }}
+file: {{ symbol.file }}
+line: {{ symbol.start_line }}
+tags: [code, {{ symbol.language.value }}, method{% if changed %}, changed{% endif %}]
+{% if symbol.parents %}
+parent: "[[{{ symbol.parents[0] }}]]"
+{% endif %}
+{% if changed %}
+changed: true
+change_status: {{ change_status }}
+{% endif %}
+aliases:
+{% for alias in aliases %}
+  - {{ alias }}
+{% endfor %}
+---
+
+# {{ symbol.name }}
+
+{{ symbol.docstring }}
+
+{% if changed %}
+> [!warning] Changed since git HEAD — status `{{ change_status }}`
+
+{% if change_diff %}
+```diff
+{{ change_diff }}
+```
+
+{% endif %}
+{% endif %}
+## Signature
+
+```{{ symbol.language.value }}
+{{ symbol.signature }}
+```
+
+{% if symbol.source_snippet %}
+## Source
+
+<details>
+<summary>Show implementation</summary>
+
+```{{ symbol.language.value }}
+{{ symbol.source_snippet }}
+```
+
+</details>
+{% endif %}
+
+{% if symbol.decorators %}
+## Decorators
+
+{% for decorator in symbol.decorators %}
+- `@{{ decorator }}`
+{% endfor %}
+
+{% endif %}
+
+{% if symbol.parents %}
+## Parent
+
+- [[{{ symbol.parents[0] }}]]
+
+{% endif %}
+
+{% if callees %}
+## Calls
+
+{{ callees }}
+
+{% endif %}
+
+{% if callers %}
+## Called by
+
+{{ callers }}
+
+{% endif %}
+
+{% if related %}
+## Related
+
+{{ related }}
+
+{% endif %}
