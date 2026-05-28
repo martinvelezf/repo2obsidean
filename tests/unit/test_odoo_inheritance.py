@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from app.graph.builder import SymbolGraph
-from app.parser.base import Language
-from app.parser.tree_sitter_parser import TreeSitterParser
+from repo2obsidean.graph.builder import SymbolGraph
+from repo2obsidean.parser.base import Language
+from repo2obsidean.parser.tree_sitter_parser import TreeSitterParser
 
 
 @pytest.fixture

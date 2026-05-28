@@ -2,9 +2,9 @@
 
 from pathlib import Path
 
-from app.cli import _matches_any, _iter_source_files
-from app.git_utils import ChangeInfo, Hunk, diff_for_lines, _parse_unified_diff
-from app.parser.base import Language
+from repo2obsidean.cli import _matches_any, _iter_source_files
+from repo2obsidean.git_utils import ChangeInfo, Hunk, diff_for_lines, _parse_unified_diff
+from repo2obsidean.parser.base import Language
 
 
 def test_matches_any_basename_and_relpath():

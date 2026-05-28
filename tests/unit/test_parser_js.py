@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from app.parser.base import Language, SymbolKind
-from app.parser.tree_sitter_parser import TreeSitterParser
+from repo2obsidean.parser.base import Language, SymbolKind
+from repo2obsidean.parser.tree_sitter_parser import TreeSitterParser
 
 
 @pytest.fixture
