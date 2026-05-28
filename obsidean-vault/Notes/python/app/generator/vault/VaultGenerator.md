@@ -4,9 +4,7 @@ kind: class
 language: python
 file: app/generator/vault.py
 line: 14
-tags: [code, python, class, changed]
-changed: true
-change_status: M
+tags: [code, python, class]
 aliases:
   - VaultGenerator
   - VaultGenerator
@@ -15,29 +13,6 @@ aliases:
 # VaultGenerator
 
 Generate an Obsidian vault from a symbol graph.
-
-#changed
-
-> [!warning] Changed since git HEAD — status `M`
-
-```diff
-@@ -37,5 +37,10 @@ class VaultGenerator:
--        """Generate the vault from a symbol graph."""
--        # Clean output directory
--        if self.output_dir.exists():
--            shutil.rmtree(self.output_dir)
--        self.output_dir.mkdir(parents=True)
-+        """Generate the vault from a symbol graph.
-+
-+        Only the generated ``Notes/`` content is wiped and rebuilt. Anything
-+        else in the output directory — notably Obsidian's own ``.obsidian/``
-+        config (graph color groups, workspace, appearance) — is preserved, so
-+        regenerating doesn't blow away the user's graph setup.
-+        """
-+        self.output_dir.mkdir(parents=True, exist_ok=True)
-+        if self.notes_dir.exists():
-+            shutil.rmtree(self.notes_dir)
-```
 
 ## Signature
 

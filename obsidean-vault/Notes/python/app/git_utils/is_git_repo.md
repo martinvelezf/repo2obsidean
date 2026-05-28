@@ -4,9 +4,7 @@ kind: function
 language: python
 file: app/git_utils.py
 line: 45
-tags: [code, python, function, changed]
-changed: true
-change_status: M
+tags: [code, python, function]
 aliases:
   - is_git_repo
   - is_git_repo
@@ -15,15 +13,6 @@ aliases:
 # is_git_repo
 
 True if ``root`` is inside a git working tree.
-
-#changed
-
-> [!warning] Changed since git HEAD — status `M`
-
-```diff
-@@ -45,0 +46 @@ def is_git_repo(root: Path) -> bool:
-+    # demo edit (revert with: git checkout -- app/git_utils.py)
-```
 
 ## Signature
 

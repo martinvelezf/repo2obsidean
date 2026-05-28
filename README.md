@@ -12,21 +12,25 @@ Eveyone is welcome to contribute to this repository and built a crazy open sourc
 
 ## Installation
 
-Obsidean installs as a standalone `obsidean` command. Pick whichever fits:
+Installs the `repo2obsidean` command (with `obsidean` as a short alias). Pick
+whichever fits:
 
 ```bash
-# Recommended: isolated install as a global CLI tool (like running `repomix`)
-pipx install dist/obsidean-0.1.0-py3-none-any.whl
+# From PyPI (once published) — no repo needed:
+pip install repo2obsidean
+# or as an isolated global CLI tool, like running `repomix`:
+pipx install repo2obsidean
 
-# Or into the current environment
-pip install dist/obsidean-0.1.0-py3-none-any.whl
+# From a built wheel (offline):
+pipx install dist/repo2obsidean-0.1.1-py3-none-any.whl
 
-# Or from source, editable, for development
+# From source, editable, for development:
 python3 -m venv venv && source venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-To build the wheel yourself: `python -m build --wheel` (output lands in `dist/`).
+To build the distributables yourself: `python -m build` writes a wheel **and**
+sdist to `dist/`.
 
 ## Quick Start
 
@@ -56,8 +60,8 @@ obsidean ./odoo ./user ./enterprise --out ./vault
 
 Supported languages (auto-detected): **Python** (`.py`), **Go** (`.go`),
 **JavaScript** (`.js`, `.mjs`, `.cjs`, `.jsx`). Add a language by writing a
-tree-sitter walker in [tree_sitter_parser.py](app/parser/tree_sitter_parser.py)
-and a glob in [cli.py](app/cli.py).
+tree-sitter walker in [tree_sitter_parser.py](repo2obsidean/parser/tree_sitter_parser.py)
+and a glob in [cli.py](repo2obsidean/cli.py).
 
 ### Choosing directories and files
 
@@ -116,7 +120,7 @@ That animation is generated straight from the symbol graph (no screen
 recording) and can be regenerated any time:
 
 ```bash
-python scripts/animate_graph.py app --out docs/graph-changed.gif
+python scripts/animate_graph.py repo2obsidean --out docs/graph-changed.gif
 ```
 
 It rebuilds the graph, flags git-changed symbols, and writes a looping GIF where
@@ -209,18 +213,18 @@ uv run obsidean build /path/to/requests --out /tmp/requests-vault
 
 ### Add a new language
 
-1. Write a tree-sitter query file: `app/parser/queries/{lang}.scm`
-2. Add language to `Language` enum in `app/parser/base.py`
+1. Write a tree-sitter query file: `repo2obsidean/parser/queries/{lang}.scm`
+2. Add language to `Language` enum in `repo2obsidean/parser/base.py`
 3. Add extraction logic to `TreeSitterParser._extract_{lang}_symbols()` and `_walk_{lang}_tree()`
 4. Create test fixture: `tests/fixtures/sample_{lang}.{ext}`
 
 ## Architecture
 
-- **Parser**: `app/parser/tree_sitter_parser.py` — uses tree-sitter to extract symbols
-- **Graph**: `app/graph/builder.py` — networkx graph with typed edges (CALLS, INHERITS, IMPORTS)
-- **Generator**: `app/generator/vault.py` — emits markdown files from graph + Jinja2 templates
-- **CLI**: `app/cli.py` — orchestrates parsing → graph building → generation
-- **API** (Phase 2): `app/api/` — FastAPI service wrapping the core engine
+- **Parser**: `repo2obsidean/parser/tree_sitter_parser.py` — uses tree-sitter to extract symbols
+- **Graph**: `repo2obsidean/graph/builder.py` — networkx graph with typed edges (CALLS, INHERITS, IMPORTS)
+- **Generator**: `repo2obsidean/generator/vault.py` — emits markdown files from graph + Jinja2 templates
+- **CLI**: `repo2obsidean/cli.py` — orchestrates parsing → graph building → generation
+- **API** (Phase 2): `repo2obsidean/api/` — FastAPI service wrapping the core engine
 
 ## License
 

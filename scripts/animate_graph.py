@@ -18,10 +18,10 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-from app.cli import _detect_languages, _iter_source_files, _stamp_git_changes
-from app.graph.builder import SymbolGraph
-from app.parser.base import Language
-from app.parser.tree_sitter_parser import TreeSitterParser
+from repo2obsidean.cli import _detect_languages, _iter_source_files, _stamp_git_changes
+from repo2obsidean.graph.builder import SymbolGraph
+from repo2obsidean.parser.base import Language
+from repo2obsidean.parser.tree_sitter_parser import TreeSitterParser
 
 
 def build_graph(paths: list[Path]) -> SymbolGraph:

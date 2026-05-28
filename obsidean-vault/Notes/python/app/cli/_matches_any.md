@@ -4,9 +4,7 @@ kind: function
 language: python
 file: app/cli.py
 line: 31
-tags: [code, python, function, changed]
-changed: true
-change_status: M
+tags: [code, python, function]
 aliases:
   - _matches_any
   - _matches_any
@@ -19,15 +17,6 @@ True if the path matches any glob.
     Matches against the full root-relative path, the bare filename, AND every
     trailing sub-path, so a pattern like ``models/**`` targets a directory at
     any depth (e.g. ``sale/models/foo.py``), not just at the root.
-
-#changed
-
-> [!warning] Changed since git HEAD — status `M`
-
-```diff
-@@ -37,0 +39 @@ def _matches_any(rel_path: str, name: str, patterns: tuple[str, ...]) -> bool:
-+    _fake_test()
-```
 
 ## Signature
 

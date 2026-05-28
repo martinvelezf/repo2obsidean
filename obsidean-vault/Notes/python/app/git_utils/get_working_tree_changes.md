@@ -4,9 +4,7 @@ kind: function
 language: python
 file: app/git_utils.py
 line: 52
-tags: [code, python, function, changed]
-changed: true
-change_status: M
+tags: [code, python, function]
 aliases:
   - get_working_tree_changes
   - get_working_tree_changes
@@ -18,15 +16,6 @@ Return {resolved_file_path: ChangeInfo} for uncommitted changes.
 
     Combines staged + unstaged + untracked, i.e. everything that differs from
     HEAD in the working tree.
-
-#changed
-
-> [!warning] Changed since git HEAD — status `M`
-
-```diff
-@@ -51,0 +53 @@ def get_working_tree_changes(root: Path) -> dict[Path, ChangeInfo]:
-+    # demo edit (revert with: git checkout -- app/git_utils.py)
-```
 
 ## Signature
 

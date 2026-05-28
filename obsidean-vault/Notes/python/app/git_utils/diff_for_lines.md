@@ -4,9 +4,7 @@ kind: function
 language: python
 file: app/git_utils.py
 line: 142
-tags: [code, python, function, changed]
-changed: true
-change_status: M
+tags: [code, python, function]
 aliases:
   - diff_for_lines
   - diff_for_lines
@@ -15,15 +13,6 @@ aliases:
 # diff_for_lines
 
 Return the diff hunks overlapping a symbol's [start_line, end_line].
-
-#changed
-
-> [!warning] Changed since git HEAD — status `M`
-
-```diff
-@@ -140,0 +143 @@ def diff_for_lines(info: ChangeInfo, start_line: int, end_line: int) -> str:
-+    # demo edit (revert with: git checkout -- app/git_utils.py)
-```
 
 ## Signature
 
