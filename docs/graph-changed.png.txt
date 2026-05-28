@@ -1,0 +1,7 @@
+Save the Obsidian graph-view screenshot here as `graph-changed.png`
+(the README references docs/graph-changed.png).
+
+The intended image: the vault's Graph view with a `tag:#changed` colour group,
+showing the changed symbols rendered as red nodes among the grey ones.
+
+You can delete this .txt placeholder once the PNG is in place.

@@ -78,16 +78,43 @@ skipped.
 ### Git change tracking (review what changed)
 
 By default Obsidean compares each file to **git HEAD** and flags uncommitted
-working-tree changes. Each affected symbol note gets:
+working-tree changes (staged + unstaged + new untracked files). Each affected
+symbol note gets:
 
-- a `#changed` tag and `changed: true` / `change_status` in frontmatter (so you
-  can color or filter changed notes in Obsidian),
+- a `#changed` tag **both** in frontmatter (`tags: [..., changed]`) and as an
+  inline tag in the note body — so Obsidian recognises it everywhere,
+- `changed: true` / `change_status: M|A|D` frontmatter (for Dataview/CSS),
 - an inline `> [!warning]` callout with a **diff of just that symbol's lines**.
 
 It also writes `Notes/recent-changes.md` — an index of every changed symbol,
 grouped by layer and file, with links. A symbol is flagged only when a diff hunk
 actually overlaps its line range (zero-context diffing), so unchanged neighbours
 aren't marked. Disable with `--no-git`.
+
+> A symbol is flagged only for changes to files **git already tracks** — brand
+> new files only count once they are `git add`-ed (an untracked file hidden by
+> `.gitignore` will not be detected).
+
+#### Seeing changes in Obsidian's Graph view
+
+Changed symbols light up in the graph once you add a colour group keyed on the
+`#changed` tag:
+
+1. Open **Graph view** → **Filters → Groups → New group**.
+2. Query: `tag:#changed` — pick a bright colour (e.g. red).
+3. Reload Obsidian after regenerating (`Ctrl/Cmd+P → "Reload app without
+   saving"`) so it re-reads the freshly tagged notes.
+
+![Changed symbols highlighted in red in Obsidian's graph view](docs/graph-changed.png)
+
+The red nodes are exactly the symbols whose source changed since `HEAD` — a
+live, navigable change-impact view of the codebase. Tip: add a second group like
+`path:rebound` (blue) to tint a specific layer, and drag the node-size slider up
+so changed nodes stand out.
+
+> Regenerating **preserves your `.obsidian/` config** (graph groups, workspace),
+> so the colour group you set up survives every rebuild. Only the `Notes/`
+> content is rewritten.
 
 ### Framework awareness: Odoo model inheritance
 

@@ -43,12 +43,14 @@ def _git(root: Path, *args: str) -> subprocess.CompletedProcess:
 
 
 def is_git_repo(root: Path) -> bool:
+    # demo edit (revert with: git checkout -- app/git_utils.py)
     """True if ``root`` is inside a git working tree."""
     r = _git(root, "rev-parse", "--is-inside-work-tree")
     return r.returncode == 0 and r.stdout.strip() == "true"
 
 
 def get_working_tree_changes(root: Path) -> dict[Path, ChangeInfo]:
+    # demo edit (revert with: git checkout -- app/git_utils.py)
     """Return {resolved_file_path: ChangeInfo} for uncommitted changes.
 
     Combines staged + unstaged + untracked, i.e. everything that differs from
@@ -138,6 +140,7 @@ def _parse_unified_diff(diff_text: str, repo_top: Path) -> dict[Path, list[Hunk]
 
 
 def diff_for_lines(info: ChangeInfo, start_line: int, end_line: int) -> str:
+    # demo edit (revert with: git checkout -- app/git_utils.py)
     """Return the diff hunks overlapping a symbol's [start_line, end_line]."""
     if info.status == "A":
         return "(new file — not yet committed)"

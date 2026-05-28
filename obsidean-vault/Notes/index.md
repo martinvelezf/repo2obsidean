@@ -2,16 +2,6 @@
 
 ## Python
 
-### InheritedClass
-
-- [[InheritedClass.special_greet|special_greet]] (`method`)
-
-### MyClass
-
-- [[MyClass.__init__|__init__]] (`method`)
-- [[MyClass.greet|greet]] (`method`)
-- [[MyClass.upper_name|upper_name]] (`method`)
-
 ### Parser
 
 - [[Parser.parse|parse]] (`method`)
@@ -19,6 +9,7 @@
 ### SymbolGraph
 
 - [[SymbolGraph.__init__|__init__]] (`method`)
+- [[SymbolGraph._build_odoo_index|_build_odoo_index]] (`method`)
 - [[SymbolGraph._distance_to|_distance_to]] (`method`)
 - [[SymbolGraph._resolve_call|_resolve_call]] (`method`)
 - [[SymbolGraph._resolve_name|_resolve_name]] (`method`)
@@ -34,18 +25,26 @@
 
 - [[TreeSitterParser.__init__|__init__]] (`method`)
 - [[TreeSitterParser._clean_docstring|_clean_docstring]] (`method`)
+- [[TreeSitterParser._collect_strings|_collect_strings]] (`method`)
+- [[TreeSitterParser._dict_keys|_dict_keys]] (`method`)
 - [[TreeSitterParser._extract_calls|_extract_calls]] (`method`)
 - [[TreeSitterParser._field_text|_field_text]] (`method`)
 - [[TreeSitterParser._go_doc_comment|_go_doc_comment]] (`method`)
 - [[TreeSitterParser._go_receiver|_go_receiver]] (`method`)
+- [[TreeSitterParser._js_doc_comment|_js_doc_comment]] (`method`)
+- [[TreeSitterParser._js_heritage|_js_heritage]] (`method`)
 - [[TreeSitterParser._line_signature|_line_signature]] (`method`)
 - [[TreeSitterParser._load_parser|_load_parser]] (`method`)
 - [[TreeSitterParser._python_base_classes|_python_base_classes]] (`method`)
 - [[TreeSitterParser._python_decorators|_python_decorators]] (`method`)
 - [[TreeSitterParser._python_docstring|_python_docstring]] (`method`)
+- [[TreeSitterParser._python_odoo_attrs|_python_odoo_attrs]] (`method`)
 - [[TreeSitterParser._snippet|_snippet]] (`method`)
+- [[TreeSitterParser._str_value|_str_value]] (`method`)
+- [[TreeSitterParser._strip_quotes|_strip_quotes]] (`method`)
 - [[TreeSitterParser._walk_calls|_walk_calls]] (`method`)
 - [[TreeSitterParser._walk_go|_walk_go]] (`method`)
+- [[TreeSitterParser._walk_js|_walk_js]] (`method`)
 - [[TreeSitterParser._walk_python|_walk_python]] (`method`)
 - [[TreeSitterParser.parse_file|parse_file]] (`method`)
 
@@ -56,14 +55,18 @@
 - [[VaultGenerator._generate_index|_generate_index]] (`method`)
 - [[VaultGenerator._generate_mocs|_generate_mocs]] (`method`)
 - [[VaultGenerator._generate_note|_generate_note]] (`method`)
+- [[VaultGenerator._generate_odoo_report|_generate_odoo_report]] (`method`)
+- [[VaultGenerator._generate_recent_changes|_generate_recent_changes]] (`method`)
 - [[VaultGenerator._setup_jinja|_setup_jinja]] (`method`)
+- [[VaultGenerator._symbol_link|_symbol_link]] (`method`)
+- [[VaultGenerator._unique_path|_unique_path]] (`method`)
 - [[VaultGenerator.generate|generate]] (`method`)
 
 ### _root_
 
-- [[InheritedClass|InheritedClass]] (`class`)
+- [[ChangeInfo|ChangeInfo]] (`class`)
+- [[Hunk|Hunk]] (`class`)
 - [[Language|Language]] (`class`)
-- [[MyClass|MyClass]] (`class`)
 - [[Parser|Parser]] (`class`)
 - [[Symbol|Symbol]] (`class`)
 - [[SymbolGraph|SymbolGraph]] (`class`)
@@ -72,19 +75,20 @@
 - [[VaultGenerator|VaultGenerator]] (`class`)
 - [[_build_vault|_build_vault]] (`function`)
 - [[_detect_languages|_detect_languages]] (`function`)
+- [[_fake_test|_fake_test]] (`function`)
+- [[_file_tail|_file_tail]] (`function`)
+- [[_git|_git]] (`function`)
 - [[_iter_source_files|_iter_source_files]] (`function`)
-- [[another_function|another_function]] (`function`)
+- [[_matches_any|_matches_any]] (`function`)
+- [[_parse_unified_diff|_parse_unified_diff]] (`function`)
+- [[_stamp_git_changes|_stamp_git_changes]] (`function`)
+- [[diff_for_lines|diff_for_lines]] (`function`)
+- [[get_working_tree_changes|get_working_tree_changes]] (`function`)
+- [[is_git_repo|is_git_repo]] (`function`)
 - [[main|main]] (`function`)
 - [[normalize_call_target|normalize_call_target]] (`function`)
-- [[sample_python_file|sample_python_file]] (`function`)
 - [[sanitize_filename|sanitize_filename]] (`function`)
 - [[sanitize_path|sanitize_path]] (`function`)
 - [[slug_from_symbol|slug_from_symbol]] (`function`)
-- [[standalone_function|standalone_function]] (`function`)
-- [[test_parse_python_classes|test_parse_python_classes]] (`function`)
-- [[test_parse_python_docstrings|test_parse_python_docstrings]] (`function`)
-- [[test_parse_python_functions|test_parse_python_functions]] (`function`)
-- [[test_parse_python_inheritance|test_parse_python_inheritance]] (`function`)
-- [[test_parse_python_methods|test_parse_python_methods]] (`function`)
 - [[wikilink_from_qualified_name|wikilink_from_qualified_name]] (`function`)
 

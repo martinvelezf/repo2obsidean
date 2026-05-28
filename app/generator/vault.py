@@ -34,11 +34,16 @@ class VaultGenerator:
         )
 
     def generate(self, graph: SymbolGraph):
-        """Generate the vault from a symbol graph."""
-        # Clean output directory
-        if self.output_dir.exists():
-            shutil.rmtree(self.output_dir)
-        self.output_dir.mkdir(parents=True)
+        """Generate the vault from a symbol graph.
+
+        Only the generated ``Notes/`` content is wiped and rebuilt. Anything
+        else in the output directory — notably Obsidian's own ``.obsidian/``
+        config (graph color groups, workspace, appearance) — is preserved, so
+        regenerating doesn't blow away the user's graph setup.
+        """
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        if self.notes_dir.exists():
+            shutil.rmtree(self.notes_dir)
         self.notes_dir.mkdir(parents=True)
 
         # Iterate the full list (not the deduped dict) so identically-named

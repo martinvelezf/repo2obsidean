@@ -23,6 +23,8 @@ aliases:
 {{ symbol.docstring }}
 
 {% if changed %}
+#changed
+
 > [!warning] Changed since git HEAD — status `{{ change_status }}`
 
 {% if change_diff %}
