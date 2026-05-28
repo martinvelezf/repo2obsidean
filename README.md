@@ -105,12 +105,22 @@ Changed symbols light up in the graph once you add a colour group keyed on the
 3. Reload Obsidian after regenerating (`Ctrl/Cmd+P → "Reload app without
    saving"`) so it re-reads the freshly tagged notes.
 
-![Changed symbols highlighted in red in Obsidian's graph view](docs/graph-changed.png)
+![Animated obsidean graph with changed symbols pulsing red](docs/graph-changed.gif)
 
 The red nodes are exactly the symbols whose source changed since `HEAD` — a
 live, navigable change-impact view of the codebase. Tip: add a second group like
 `path:rebound` (blue) to tint a specific layer, and drag the node-size slider up
 so changed nodes stand out.
+
+That animation is generated straight from the symbol graph (no screen
+recording) and can be regenerated any time:
+
+```bash
+python scripts/animate_graph.py app --out docs/graph-changed.gif
+```
+
+It rebuilds the graph, flags git-changed symbols, and writes a looping GIF where
+the changed nodes pulse red — handy for PRs or change reviews outside Obsidian.
 
 > Regenerating **preserves your `.obsidian/` config** (graph groups, workspace),
 > so the colour group you set up survives every rebuild. Only the `Notes/`
