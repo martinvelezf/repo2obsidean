@@ -73,10 +73,9 @@ repo2obsidean = "repo2obsidean.cli:main"
 obsidean = "repo2obsidean.cli:main"   # short alias
 
 [project.urls]
-# TODO: replace with your real repository URL before publishing.
-Homepage = "https://github.com/your-org/obsidean"
-Repository = "https://github.com/your-org/obsidean"
-Issues = "https://github.com/your-org/obsidean/issues"
+Homepage = "https://github.com/martinvelezf/repo2obsidean"
+Repository = "https://github.com/martinvelezf/repo2obsidean"
+Issues = "https://github.com/martinvelezf/repo2obsidean/issues"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,8 +1,14 @@
-# Obsidean
+# repo2obsidean
+
+[![PyPI version](https://img.shields.io/pypi/v/repo2obsidean.svg)](https://pypi.org/project/repo2obsidean/)
+[![Python versions](https://img.shields.io/pypi/pyversions/repo2obsidean.svg)](https://pypi.org/project/repo2obsidean/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Transform code repositories into Obsidian vaults — one markdown note per class and method, with wikilinks connecting callers, callees, and inheritance relationships.
 
-Eveyone is welcome to contribute to this repository and built a crazy open source package
+**On PyPI:** <https://pypi.org/project/repo2obsidean/> — `pip install repo2obsidean`
+
+Everyone is welcome to contribute to this repository and build a crazy open source package.
 
 ## Why?
 
@@ -20,6 +26,9 @@ whichever fits:
 pip install repo2obsidean
 # or as an isolated global CLI tool, like running `repomix`:
 pipx install repo2obsidean
+
+# Directly from GitHub (works today, no PyPI needed):
+pip install "git+https://github.com/martinvelezf/repo2obsidean.git"
 
 # From a built wheel (offline):
 pipx install dist/repo2obsidean-0.1.1-py3-none-any.whl
@@ -203,7 +212,7 @@ uv run pytest tests/unit -v
 
 ```bash
 # Parse a real repository
-uv run obsidean build /path/to/requests --out /tmp/requests-vault
+repo2obsidean /path/to/requests --out /tmp/requests-vault
 
 # Open the vault in Obsidian Desktop and verify:
 # - Session.md exists
@@ -226,7 +235,36 @@ uv run obsidean build /path/to/requests --out /tmp/requests-vault
 - **CLI**: `repo2obsidean/cli.py` — orchestrates parsing → graph building → generation
 - **API** (Phase 2): `repo2obsidean/api/` — FastAPI service wrapping the core engine
 
+## Publishing to PyPI
+
+`pip install repo2obsidean` works by name only once the package is published to
+[PyPI](https://pypi.org). One-time setup, then a 3-step release:
+
+```bash
+# 0. one-time: create a PyPI account + an API token (pypi.org → Account → API tokens)
+pip install build twine
+
+# 1. build wheel + sdist
+python -m build
+
+# 2. (recommended) dry-run on TestPyPI first
+twine upload --repository testpypi dist/*
+pip install -i https://test.pypi.org/simple/ repo2obsidean
+
+# 3. publish to the real PyPI
+twine upload dist/*          # username: __token__   password: pypi-<your-token>
+```
+
+After step 3, anyone can `pip install repo2obsidean`. Notes:
+
+- The name **`repo2obsidean`** must be free — check
+  <https://pypi.org/project/repo2obsidean/> (a 404 means it's available).
+- A version number can't be re-uploaded; bump `version` in `pyproject.toml` for
+  each release.
+- Until then, it installs directly from GitHub:
+  `pip install "git+https://github.com/martinvelezf/repo2obsidean.git"`.
+
 ## License
 
 MIT
-# repo2obsidean
+
