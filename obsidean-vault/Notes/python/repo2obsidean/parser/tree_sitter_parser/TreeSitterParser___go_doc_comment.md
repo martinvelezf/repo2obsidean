@@ -3,7 +3,7 @@ name: TreeSitterParser._go_doc_comment
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 331
+line: 392
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

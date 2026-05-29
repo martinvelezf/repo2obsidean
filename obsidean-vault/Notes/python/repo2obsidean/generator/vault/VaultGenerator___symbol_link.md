@@ -3,7 +3,7 @@ name: VaultGenerator._symbol_link
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 168
+line: 211
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

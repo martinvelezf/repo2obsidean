@@ -3,7 +3,7 @@ name: TreeSitterParser._js_heritage
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 448
+line: 509
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

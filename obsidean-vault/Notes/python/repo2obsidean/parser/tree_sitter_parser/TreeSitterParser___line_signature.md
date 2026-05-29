@@ -3,7 +3,7 @@ name: TreeSitterParser._line_signature
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 488
+line: 606
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

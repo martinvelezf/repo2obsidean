@@ -3,7 +3,7 @@ name: Parser
 kind: class
 language: python
 file: repo2obsidean/parser/base.py
-line: 61
+line: 65
 tags: [code, python, class]
 aliases:
   - Parser

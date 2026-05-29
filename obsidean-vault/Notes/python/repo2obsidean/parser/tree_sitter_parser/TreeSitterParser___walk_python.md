@@ -3,7 +3,7 @@ name: TreeSitterParser._walk_python
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 59
+line: 119
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:
@@ -72,6 +72,7 @@ def _walk_python( self, node
 - [[TreeSitterParser___walk_python]]
 - [[append]]
 - [[child_by_field_name]]
+- [[is_route_decorator]]
 
 
 ## Called by
@@ -95,4 +96,5 @@ def _walk_python( self, node
 - [[TreeSitterParser__parse_file]]
 - [[append]]
 - [[child_by_field_name]]
+- [[is_route_decorator]]
 

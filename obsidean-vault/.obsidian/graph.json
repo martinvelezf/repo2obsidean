@@ -8,10 +8,38 @@
   "collapse-color-groups": false,
   "colorGroups": [
     {
-      "query": " ",
+      "query": "tag:#changed",
       "color": {
         "a": 1,
-        "rgb": 14701138
+        "rgb": 16726832
+      }
+    },
+    {
+      "query": "tag:#route",
+      "color": {
+        "a": 1,
+        "rgb": 16749824
+      }
+    },
+    {
+      "query": "tag:#class",
+      "color": {
+        "a": 1,
+        "rgb": 5017087
+      }
+    },
+    {
+      "query": "tag:#method",
+      "color": {
+        "a": 1,
+        "rgb": 11490014
+      }
+    },
+    {
+      "query": "tag:#function",
+      "color": {
+        "a": 1,
+        "rgb": 3458905
       }
     }
   ],
@@ -25,6 +53,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.6757621765136719,
-  "close": true
+  "scale": 0.27386428673593255,
+  "close": false
 }

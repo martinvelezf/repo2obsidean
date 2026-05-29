@@ -3,7 +3,7 @@ name: TreeSitterParser._strip_quotes
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 221
+line: 282
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

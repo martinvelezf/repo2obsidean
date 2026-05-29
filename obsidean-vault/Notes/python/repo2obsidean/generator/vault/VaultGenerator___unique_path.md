@@ -3,7 +3,7 @@ name: VaultGenerator._unique_path
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 107
+line: 150
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

@@ -14,6 +14,38 @@ import tree_sitter_languages
 
 from repo2obsidean.parser.base import Language, Symbol, SymbolKind
 
+# HTTP verbs used as route-decorator method names (FastAPI/Flask-style).
+_ROUTE_VERBS = {"get", "post", "put", "patch", "delete", "head", "options"}
+# Decorator callables that always denote a route, with or without an object.
+_ROUTE_NAMES = {"route", "api_route", "websocket"}
+
+# Go router methods that register a handler (stdlib, gin, echo, chi, fiber, gorilla).
+# The handler is the last function-valued argument.
+_GO_ROUTE_METHODS = {
+    "HandleFunc", "Handle", "GET", "POST", "PUT", "DELETE", "PATCH",
+    "HEAD", "OPTIONS", "Any", "All", "Add", "Match",
+}
+# Express/JS router methods.
+_JS_ROUTE_METHODS = {"get", "post", "put", "delete", "patch", "head", "options", "all"}
+
+
+def is_route_decorator(decorators: list[str]) -> bool:
+    """Heuristic: does any decorator register an HTTP route/endpoint?
+
+    Matches Flask (`@app.route`, `@bp.route`), FastAPI (`@app.get`,
+    `@router.post`, `@app.websocket`), and Odoo (`@http.route`, `@route`).
+    Bare HTTP verbs (`@get`) are intentionally ignored to avoid false positives;
+    a verb only counts when it's a method call on an object (`@app.get`).
+    """
+    for dec in decorators:
+        name = dec.split("(", 1)[0].strip()      # callable before its arguments
+        last = name.rsplit(".", 1)[-1]
+        if last in _ROUTE_NAMES:
+            return True
+        if "." in name and last in _ROUTE_VERBS:
+            return True
+    return False
+
 
 class TreeSitterParser:
     """Parse Python and Go code using tree-sitter."""
@@ -21,6 +53,9 @@ class TreeSitterParser:
     def __init__(self, language: Language = Language.PYTHON):
         self.language = language
         self.parser = self._load_parser(language)
+        # Handler names referenced by route-registration calls (Go/JS),
+        # accumulated across files so cross-file handlers can be tagged later.
+        self.route_handlers: set[str] = set()
 
     def _load_parser(self, language: Language) -> tree_sitter.Parser:
         """Load the tree-sitter parser for a language."""
@@ -40,17 +75,42 @@ class TreeSitterParser:
         lines = content_str.splitlines()
 
         symbols: list[Symbol] = []
+        handlers: set[str] = set()
         if self.language == Language.PYTHON:
             self._walk_python(tree.root_node, file_path, lines, symbols, scope_class=None)
         elif self.language == Language.GO:
             self._walk_go(tree.root_node, file_path, lines, symbols)
+            handlers = self._collect_route_calls(tree.root_node, Language.GO)
         elif self.language == Language.JAVASCRIPT:
             self._walk_js(tree.root_node, file_path, lines, symbols, scope_class=None)
+            handlers = self._collect_route_calls(tree.root_node, Language.JAVASCRIPT)
+
+        if handlers:
+            # Same-file tagging now; cross-file handlers are tagged by the caller
+            # via apply_route_tags() once every file has been parsed.
+            self.route_handlers |= handlers
+            for s in symbols:
+                if s.kind in (SymbolKind.FUNCTION, SymbolKind.METHOD) and s.name in handlers:
+                    s.is_route = True
 
         if layer:
             for s in symbols:
                 s.layer = layer
         return symbols
+
+    def apply_route_tags(self, symbols: list[Symbol]) -> None:
+        """Tag any symbol whose name matches a collected route handler.
+
+        Run after all files are parsed so route registrations in one file tag
+        handler functions defined in another.
+        """
+        if not self.route_handlers:
+            return
+        for s in symbols:
+            if (s.language == self.language and not s.is_route
+                    and s.kind in (SymbolKind.FUNCTION, SymbolKind.METHOD)
+                    and s.name in self.route_handlers):
+                s.is_route = True
 
     # ------------------------------------------------------------------ #
     # Python
@@ -127,6 +187,7 @@ class TreeSitterParser:
                         source_snippet=self._snippet(child, lines),
                         parents=parents,
                         decorators=decorators or [],
+                        is_route=is_route_decorator(decorators or []),
                         calls=self._extract_calls(child),
                     )
                 )
@@ -473,6 +534,63 @@ class TreeSitterParser:
             else:
                 break
         return " ".join(doc_lines)[:500]
+
+    # ------------------------------------------------------------------ #
+    # Route registration calls (Go / JavaScript)
+    # ------------------------------------------------------------------ #
+
+    def _collect_route_calls(self, root: tree_sitter.Node, lang: Language) -> set[str]:
+        """Return handler names referenced by router-registration calls."""
+        handlers: set[str] = set()
+        self._walk_route_calls(root, lang, handlers)
+        return handlers
+
+    def _walk_route_calls(self, node: tree_sitter.Node, lang: Language, handlers: set[str]):
+        if node.type in ("call_expression", "call"):
+            name = self._route_handler_name(node, lang)
+            if name:
+                handlers.add(name)
+        for child in node.children:
+            self._walk_route_calls(child, lang, handlers)
+
+    def _route_handler_name(self, call_node: tree_sitter.Node, lang: Language) -> Optional[str]:
+        """If ``call_node`` registers a route, return the bare handler name.
+
+        Matches ``r.GET("/x", handler)`` (Go) / ``app.get("/x", handler)`` (JS):
+        a method call whose name is a routing verb, whose last identifier-like
+        argument is the handler. Anonymous function handlers are skipped.
+        """
+        fn = call_node.child_by_field_name("function")
+        if fn is None:
+            return None
+
+        # Method name = the field/property after the dot.
+        method = None
+        if lang == Language.GO and fn.type == "selector_expression":
+            field = fn.child_by_field_name("field")
+            method = field.text.decode("utf-8") if field else None
+            verbs = _GO_ROUTE_METHODS
+        elif lang == Language.JAVASCRIPT and fn.type == "member_expression":
+            prop = fn.child_by_field_name("property")
+            method = prop.text.decode("utf-8") if prop else None
+            verbs = _JS_ROUTE_METHODS
+        else:
+            return None
+
+        if method not in verbs:
+            return None
+
+        # Handler = the last identifier / selector / member argument.
+        args = call_node.child_by_field_name("arguments")
+        if args is None:
+            return None
+        handler = None
+        for arg in args.children:
+            if arg.type in ("identifier", "selector_expression", "member_expression"):
+                handler = arg
+        if handler is None:
+            return None
+        return handler.text.decode("utf-8").rsplit(".", 1)[-1]  # h.List -> List
 
     # ------------------------------------------------------------------ #
     # Shared helpers

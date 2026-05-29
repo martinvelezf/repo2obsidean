@@ -25,6 +25,7 @@
 
 - [[TreeSitterParser.__init__|__init__]] (`method`)
 - [[TreeSitterParser._clean_docstring|_clean_docstring]] (`method`)
+- [[TreeSitterParser._collect_route_calls|_collect_route_calls]] (`method`)
 - [[TreeSitterParser._collect_strings|_collect_strings]] (`method`)
 - [[TreeSitterParser._dict_keys|_dict_keys]] (`method`)
 - [[TreeSitterParser._extract_calls|_extract_calls]] (`method`)
@@ -39,6 +40,7 @@
 - [[TreeSitterParser._python_decorators|_python_decorators]] (`method`)
 - [[TreeSitterParser._python_docstring|_python_docstring]] (`method`)
 - [[TreeSitterParser._python_odoo_attrs|_python_odoo_attrs]] (`method`)
+- [[TreeSitterParser._route_handler_name|_route_handler_name]] (`method`)
 - [[TreeSitterParser._snippet|_snippet]] (`method`)
 - [[TreeSitterParser._str_value|_str_value]] (`method`)
 - [[TreeSitterParser._strip_quotes|_strip_quotes]] (`method`)
@@ -46,6 +48,8 @@
 - [[TreeSitterParser._walk_go|_walk_go]] (`method`)
 - [[TreeSitterParser._walk_js|_walk_js]] (`method`)
 - [[TreeSitterParser._walk_python|_walk_python]] (`method`)
+- [[TreeSitterParser._walk_route_calls|_walk_route_calls]] (`method`)
+- [[TreeSitterParser.apply_route_tags|apply_route_tags]] (`method`)
 - [[TreeSitterParser.parse_file|parse_file]] (`method`)
 
 ### VaultGenerator
@@ -57,6 +61,7 @@
 - [[VaultGenerator._generate_note|_generate_note]] (`method`)
 - [[VaultGenerator._generate_odoo_report|_generate_odoo_report]] (`method`)
 - [[VaultGenerator._generate_recent_changes|_generate_recent_changes]] (`method`)
+- [[VaultGenerator._seed_graph_config|_seed_graph_config]] (`method`)
 - [[VaultGenerator._setup_jinja|_setup_jinja]] (`method`)
 - [[VaultGenerator._symbol_link|_symbol_link]] (`method`)
 - [[VaultGenerator._unique_path|_unique_path]] (`method`)
@@ -85,6 +90,7 @@
 - [[diff_for_lines|diff_for_lines]] (`function`)
 - [[get_working_tree_changes|get_working_tree_changes]] (`function`)
 - [[is_git_repo|is_git_repo]] (`function`)
+- [[is_route_decorator|is_route_decorator]] (`function`)
 - [[main|main]] (`function`)
 - [[normalize_call_target|normalize_call_target]] (`function`)
 - [[sanitize_filename|sanitize_filename]] (`function`)

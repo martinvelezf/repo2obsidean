@@ -3,7 +3,7 @@ name: TreeSitterParser._python_base_classes
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 147
+line: 208
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

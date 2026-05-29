@@ -3,7 +3,7 @@ name: VaultGenerator._generate_mocs
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 261
+line: 304
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

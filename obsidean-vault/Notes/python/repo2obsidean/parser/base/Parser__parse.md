@@ -3,7 +3,7 @@ name: Parser.parse
 kind: method
 language: python
 file: repo2obsidean/parser/base.py
-line: 64
+line: 68
 tags: [code, python, method]
 parent: "[[Parser]]"
 aliases:

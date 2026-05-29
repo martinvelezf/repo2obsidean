@@ -3,7 +3,7 @@ name: TreeSitterParser._clean_docstring
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 510
+line: 628
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

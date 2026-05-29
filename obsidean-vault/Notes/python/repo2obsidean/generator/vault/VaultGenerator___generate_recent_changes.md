@@ -3,7 +3,7 @@ name: VaultGenerator._generate_recent_changes
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 174
+line: 217
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

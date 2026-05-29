@@ -3,7 +3,7 @@ name: TreeSitterParser._go_receiver
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 319
+line: 380
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

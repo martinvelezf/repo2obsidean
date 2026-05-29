@@ -3,7 +3,7 @@ name: VaultGenerator._format_links
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 211
+line: 254
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

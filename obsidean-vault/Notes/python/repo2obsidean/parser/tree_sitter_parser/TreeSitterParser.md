@@ -3,7 +3,7 @@ name: TreeSitterParser
 kind: class
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 18
+line: 50
 tags: [code, python, class]
 aliases:
   - TreeSitterParser
@@ -32,6 +32,9 @@ class TreeSitterParser:
     def __init__(self, language: Language = Language.PYTHON):
         self.language = language
         self.parser = self._load_parser(language)
+        # Handler names referenced by route-registration calls (Go/JS),
+        # accumulated across files so cross-file handlers can be tagged later.
+        self.route_handlers: set[str] = set()
 
     def _load_parser(self, language: Language) -> tree_sitter.Parser:
         """Load the tree-sitter parser for a language."""
@@ -40,12 +43,7 @@ class TreeSitterParser:
         return parser
 
     def parse_file(self, file_path: Path, layer: str = "") -> list[Symbol]:
-        """Parse a file and extract symbols.
-
-        ``layer`` labels which source root the file came from (e.g. "odoo",
-        "user", "enterprise") and is stamped onto every returned symbol.
-        """
-        content_bytes =
+        """Parse a file and extra
 ```
 
 </details>
@@ -56,6 +54,7 @@ class TreeSitterParser:
 
 - [[TreeSitterParser____init__]]
 - [[TreeSitterParser___clean_docstring]]
+- [[TreeSitterParser___collect_route_calls]]
 - [[TreeSitterParser___collect_strings]]
 - [[TreeSitterParser___dict_keys]]
 - [[TreeSitterParser___extract_calls]]
@@ -70,6 +69,7 @@ class TreeSitterParser:
 - [[TreeSitterParser___python_decorators]]
 - [[TreeSitterParser___python_docstring]]
 - [[TreeSitterParser___python_odoo_attrs]]
+- [[TreeSitterParser___route_handler_name]]
 - [[TreeSitterParser___snippet]]
 - [[TreeSitterParser___str_value]]
 - [[TreeSitterParser___strip_quotes]]
@@ -77,6 +77,8 @@ class TreeSitterParser:
 - [[TreeSitterParser___walk_go]]
 - [[TreeSitterParser___walk_js]]
 - [[TreeSitterParser___walk_python]]
+- [[TreeSitterParser___walk_route_calls]]
+- [[TreeSitterParser__apply_route_tags]]
 - [[TreeSitterParser__parse_file]]
 - [[_build_vault]]
 
@@ -85,6 +87,7 @@ class TreeSitterParser:
 
 - [[TreeSitterParser____init__]]
 - [[TreeSitterParser___clean_docstring]]
+- [[TreeSitterParser___collect_route_calls]]
 - [[TreeSitterParser___collect_strings]]
 - [[TreeSitterParser___dict_keys]]
 - [[TreeSitterParser___extract_calls]]
@@ -99,6 +102,7 @@ class TreeSitterParser:
 - [[TreeSitterParser___python_decorators]]
 - [[TreeSitterParser___python_docstring]]
 - [[TreeSitterParser___python_odoo_attrs]]
+- [[TreeSitterParser___route_handler_name]]
 - [[TreeSitterParser___snippet]]
 - [[TreeSitterParser___str_value]]
 - [[TreeSitterParser___strip_quotes]]
@@ -106,6 +110,8 @@ class TreeSitterParser:
 - [[TreeSitterParser___walk_go]]
 - [[TreeSitterParser___walk_js]]
 - [[TreeSitterParser___walk_python]]
+- [[TreeSitterParser___walk_route_calls]]
+- [[TreeSitterParser__apply_route_tags]]
 - [[TreeSitterParser__parse_file]]
 - [[_build_vault]]
 

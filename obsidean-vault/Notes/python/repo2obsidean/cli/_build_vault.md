@@ -38,6 +38,7 @@ def _build_vault(
     include: tuple[str, ...] = (),
     exclude: tuple[str, ...] = (),
     use_git: bool = True,
+    reset_graph_config: bool = False,
 ) -> tuple[int, int]:
     """Run the full pipeline over one or more (path, layer) roots.
 
@@ -53,8 +54,7 @@ def _build_vault(
     for root, layer in roots:
         label = f"[{layer}] " if layer else ""
         for lang in languages:
-            files = list(_iter_source_files(root, lang, include, exclude))
-            if not
+            files = list(_iter_source_files(root, lang,
 ```
 
 </details>
@@ -67,6 +67,7 @@ def _build_vault(
 - [[VaultGenerator]]
 - [[_iter_source_files]]
 - [[_stamp_git_changes]]
+- [[apply_route_tags]]
 - [[build_from_symbols]]
 - [[echo]]
 - [[extend]]
@@ -75,6 +76,7 @@ def _build_vault(
 - [[list]]
 - [[parse_file]]
 - [[progressbar]]
+- [[values]]
 
 
 ## Called by
@@ -89,6 +91,7 @@ def _build_vault(
 - [[VaultGenerator]]
 - [[_iter_source_files]]
 - [[_stamp_git_changes]]
+- [[apply_route_tags]]
 - [[build_from_symbols]]
 - [[echo]]
 - [[extend]]
@@ -98,4 +101,5 @@ def _build_vault(
 - [[main]]
 - [[parse_file]]
 - [[progressbar]]
+- [[values]]
 

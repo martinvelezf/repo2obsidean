@@ -3,7 +3,7 @@ name: TreeSitterParser._python_odoo_attrs
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 157
+line: 218
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

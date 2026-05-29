@@ -4,7 +4,10 @@ kind: function
 language: {{ symbol.language.value }}
 file: {{ symbol.file }}
 line: {{ symbol.start_line }}
-tags: [code, {{ symbol.language.value }}, function{% if changed %}, changed{% endif %}]
+tags: [code, {{ symbol.language.value }}, function{% if is_route %}, route{% endif %}{% if changed %}, changed{% endif %}]
+{% if is_route %}
+route: true
+{% endif %}
 {% if changed %}
 changed: true
 change_status: {{ change_status }}
@@ -19,6 +22,12 @@ aliases:
 
 {{ symbol.docstring }}
 
+{% if is_route %}
+#route
+
+> [!info] HTTP route handler
+
+{% endif %}
 {% if changed %}
 #changed
 

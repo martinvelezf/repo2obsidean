@@ -38,6 +38,7 @@
   - [[TreeSitterParser.__init__|__init__]]
   - [[TreeSitterParser._load_parser|_load_parser]]
   - [[TreeSitterParser.parse_file|parse_file]]
+  - [[TreeSitterParser.apply_route_tags|apply_route_tags]]
   - [[TreeSitterParser._walk_python|_walk_python]]
   - [[TreeSitterParser._python_decorators|_python_decorators]]
   - [[TreeSitterParser._python_base_classes|_python_base_classes]]
@@ -53,6 +54,9 @@
   - [[TreeSitterParser._walk_js|_walk_js]]
   - [[TreeSitterParser._js_heritage|_js_heritage]]
   - [[TreeSitterParser._js_doc_comment|_js_doc_comment]]
+  - [[TreeSitterParser._collect_route_calls|_collect_route_calls]]
+  - [[TreeSitterParser._walk_route_calls|_walk_route_calls]]
+  - [[TreeSitterParser._route_handler_name|_route_handler_name]]
   - [[TreeSitterParser._field_text|_field_text]]
   - [[TreeSitterParser._line_signature|_line_signature]]
   - [[TreeSitterParser._snippet|_snippet]]
@@ -63,6 +67,7 @@
   - [[VaultGenerator.__init__|__init__]]
   - [[VaultGenerator._setup_jinja|_setup_jinja]]
   - [[VaultGenerator.generate|generate]]
+  - [[VaultGenerator._seed_graph_config|_seed_graph_config]]
   - [[VaultGenerator._generate_note|_generate_note]]
   - [[VaultGenerator._unique_path|_unique_path]]
   - [[VaultGenerator._generate_odoo_report|_generate_odoo_report]]
@@ -83,6 +88,7 @@
 - [[diff_for_lines|diff_for_lines]] (function)
 - [[get_working_tree_changes|get_working_tree_changes]] (function)
 - [[is_git_repo|is_git_repo]] (function)
+- [[is_route_decorator|is_route_decorator]] (function)
 - [[main|main]] (function)
 - [[normalize_call_target|normalize_call_target]] (function)
 - [[sanitize_filename|sanitize_filename]] (function)

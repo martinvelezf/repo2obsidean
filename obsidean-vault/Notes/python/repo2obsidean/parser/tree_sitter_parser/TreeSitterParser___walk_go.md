@@ -3,7 +3,7 @@ name: TreeSitterParser._walk_go
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 248
+line: 309
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

@@ -3,7 +3,7 @@ name: VaultGenerator.__init__
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 17
+line: 18
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

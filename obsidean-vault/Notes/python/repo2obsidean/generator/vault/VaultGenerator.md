@@ -3,7 +3,7 @@ name: VaultGenerator
 kind: class
 language: python
 file: repo2obsidean/generator/vault.py
-line: 14
+line: 15
 tags: [code, python, class]
 aliases:
   - VaultGenerator
@@ -48,8 +48,7 @@ class VaultGenerator:
             lstrip_blocks=True,
         )
 
-    def generate(self, graph: SymbolGraph):
-        """Generate th
+    def generate(self, graph: SymbolGraph, *, reset_graph_config: 
 ```
 
 </details>
@@ -65,6 +64,7 @@ class VaultGenerator:
 - [[VaultGenerator___generate_note]]
 - [[VaultGenerator___generate_odoo_report]]
 - [[VaultGenerator___generate_recent_changes]]
+- [[VaultGenerator___seed_graph_config]]
 - [[VaultGenerator___setup_jinja]]
 - [[VaultGenerator___symbol_link]]
 - [[VaultGenerator___unique_path]]
@@ -81,6 +81,7 @@ class VaultGenerator:
 - [[VaultGenerator___generate_note]]
 - [[VaultGenerator___generate_odoo_report]]
 - [[VaultGenerator___generate_recent_changes]]
+- [[VaultGenerator___seed_graph_config]]
 - [[VaultGenerator___setup_jinja]]
 - [[VaultGenerator___symbol_link]]
 - [[VaultGenerator___unique_path]]

@@ -81,6 +81,7 @@ def _build_vault(
     include: tuple[str, ...] = (),
     exclude: tuple[str, ...] = (),
     use_git: bool = True,
+    reset_graph_config: bool = False,
 ) -> tuple[int, int]:
     """Run the full pipeline over one or more (path, layer) roots.
 
@@ -107,12 +108,16 @@ def _build_vault(
                     except Exception as e:  # noqa: BLE001
                         click.echo(f"\n  ! error parsing {file_path}: {e}", err=True)
 
+    # Tag Go/JS route handlers registered in one file but defined in another.
+    for parser in parsers.values():
+        parser.apply_route_tags(all_symbols)
+
     changed_count = 0
     if use_git:
         changed_count = _stamp_git_changes(roots, all_symbols)
 
     graph.build_from_symbols(all_symbols)
-    VaultGenerator(out).generate(graph)
+    VaultGenerator(out).generate(graph, reset_graph_config=reset_graph_config)
     return len(all_symbols), changed_count
 
 
@@ -158,10 +163,13 @@ def _stamp_git_changes(roots: list[tuple[Path, str]], symbols: list) -> int:
               help="Map an explicit layer name to a directory (repeatable).")
 @click.option("--git/--no-git", "use_git", default=True,
               help="Detect uncommitted working-tree changes and flag them (default: on).")
+@click.option("--reset-graph-config", "reset_graph_config", is_flag=True, default=False,
+              help="Re-seed the default colour groups in .obsidian/graph.json (overwrites "
+                   "existing groups while preserving other display/forces settings).")
 @click.version_option(package_name="repo2obsidean")
 def main(repo_paths: tuple[Path, ...], out: Path, languages: tuple[str, ...],
          include: tuple[str, ...], exclude: tuple[str, ...],
-         layer_maps: tuple[str, ...], use_git: bool):
+         layer_maps: tuple[str, ...], use_git: bool, reset_graph_config: bool):
     """Turn one or more code repositories into a single Obsidian vault.
 
     Run with no arguments in a repo directory (like `repomix`):
@@ -240,7 +248,8 @@ def main(repo_paths: tuple[Path, ...], out: Path, languages: tuple[str, ...],
     if exclude:
         click.echo(f"Exclude: {', '.join(exclude)}")
 
-    count, changed = _build_vault(roots, out, selected, include, exclude, use_git)
+    count, changed = _build_vault(roots, out, selected, include, exclude, use_git,
+                                   reset_graph_config=reset_graph_config)
     click.echo(f"\n✓ Extracted {count} symbols → {out}")
     if use_git:
         click.echo(f"  {changed} symbol(s) changed since git HEAD"

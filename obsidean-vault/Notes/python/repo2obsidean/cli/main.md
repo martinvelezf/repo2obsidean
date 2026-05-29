@@ -3,7 +3,7 @@ name: main
 kind: function
 language: python
 file: repo2obsidean/cli.py
-line: 162
+line: 170
 tags: [code, python, function]
 aliases:
   - main
@@ -42,7 +42,7 @@ def main(repo_paths
 ```python
 def main(repo_paths: tuple[Path, ...], out: Path, languages: tuple[str, ...],
          include: tuple[str, ...], exclude: tuple[str, ...],
-         layer_maps: tuple[str, ...], use_git: bool):
+         layer_maps: tuple[str, ...], use_git: bool, reset_graph_config: bool):
     """Turn one or more code repositories into a single Obsidian vault.
 
     Run with no arguments in a repo directory (like `repomix`):
@@ -58,9 +58,7 @@ def main(repo_paths: tuple[Path, ...], out: Path, languages: tuple[str, ...],
     Filter which directories/files are scanned:
 
         obsidean . --include 'models/**' --include '*.py'
-        obsidean . --exclude 'tests/**' --exclude '**/migrations/**'
-
-  
+        obsidean . --exclude 'tests/**' --excl
 ```
 
 </details>
@@ -82,6 +80,9 @@ def main(repo_paths: tuple[Path, ...], out: Path, languages: tuple[str, ...],
               help="Map an explicit layer name to a directory (repeatable).")`
 - `@click.option("--git/--no-git", "use_git", default=True,
               help="Detect uncommitted working-tree changes and flag them (default: on).")`
+- `@click.option("--reset-graph-config", "reset_graph_config", is_flag=True, default=False,
+              help="Re-seed the default colour groups in .obsidian/graph.json (overwrites "
+                   "existing groups while preserving other display/forces settings).")`
 - `@click.version_option(package_name="repo2obsidean")`
 
 

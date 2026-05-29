@@ -3,7 +3,7 @@ name: TreeSitterParser.parse_file
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 31
+line: 66
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:
@@ -42,11 +42,11 @@ def parse_file(self, file_path
         lines = content_str.splitlines()
 
         symbols: list[Symbol] = []
+        handlers: set[str] = set()
         if self.language == Language.PYTHON:
             self._walk_python(tree.root_node, file_path, lines, symbols, scope_class=None)
         elif self.language == Language.GO:
-            self._walk_go(tree.root_node, file_path, lines, symbols)
-        elif self.language 
+            self._walk_go(tree.root_node, file_path, lines, s
 ```
 
 </details>
@@ -59,12 +59,14 @@ def parse_file(self, file_path
 
 ## Calls
 
+- [[TreeSitterParser___collect_route_calls]]
 - [[TreeSitterParser___walk_go]]
 - [[TreeSitterParser___walk_js]]
 - [[TreeSitterParser___walk_python]]
 - [[decode]]
 - [[parse]]
 - [[read_bytes]]
+- [[set]]
 - [[splitlines]]
 
 
@@ -72,11 +74,13 @@ def parse_file(self, file_path
 ## Related
 
 - [[TreeSitterParser]]
+- [[TreeSitterParser___collect_route_calls]]
 - [[TreeSitterParser___walk_go]]
 - [[TreeSitterParser___walk_js]]
 - [[TreeSitterParser___walk_python]]
 - [[decode]]
 - [[parse]]
 - [[read_bytes]]
+- [[set]]
 - [[splitlines]]
 

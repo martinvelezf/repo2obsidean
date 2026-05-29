@@ -1,5 +1,6 @@
 """Generate Obsidian vault from symbol graph."""
 
+import json
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -33,13 +34,17 @@ class VaultGenerator:
             lstrip_blocks=True,
         )
 
-    def generate(self, graph: SymbolGraph):
+    def generate(self, graph: SymbolGraph, *, reset_graph_config: bool = False):
         """Generate the vault from a symbol graph.
 
         Only the generated ``Notes/`` content is wiped and rebuilt. Anything
         else in the output directory — notably Obsidian's own ``.obsidian/``
         config (graph color groups, workspace, appearance) — is preserved, so
         regenerating doesn't blow away the user's graph setup.
+
+        Set ``reset_graph_config=True`` to re-seed the default colour groups
+        (changed/route/class/method/function) even when graph.json exists.
+        Other settings (scale, display, forces) are merged-preserved.
         """
         self.output_dir.mkdir(parents=True, exist_ok=True)
         if self.notes_dir.exists():
@@ -57,11 +62,47 @@ class VaultGenerator:
         self._generate_index(symbols)
         self._generate_mocs(symbols, graph)
 
+        # Seed default Obsidian graph color groups (kind/route/changed) on first
+        # run; preserves a user-customised graph.json unless reset is requested.
+        self._seed_graph_config(reset=reset_graph_config)
+
         # Framework-aware report: Odoo model inheritance across layers.
         self._generate_odoo_report(graph)
 
         # Git: index of symbols changed since HEAD.
         self._generate_recent_changes(graph)
+
+    # Default Obsidian graph color groups, ready to use on first open. Order
+    # matters: Obsidian applies the first matching group, so #changed wins over
+    # the per-kind colours, and #route wins over plain #function/#method.
+    DEFAULT_COLOR_GROUPS = [
+        {"query": "tag:#changed", "color": {"a": 1, "rgb": 16726832}},   # red
+        {"query": "tag:#route", "color": {"a": 1, "rgb": 16749824}},     # orange
+        {"query": "tag:#class", "color": {"a": 1, "rgb": 5017087}},      # blue
+        {"query": "tag:#method", "color": {"a": 1, "rgb": 11490014}},    # purple
+        {"query": "tag:#function", "color": {"a": 1, "rgb": 3458905}},   # green
+    ]
+
+    def _seed_graph_config(self, reset: bool = False):
+        """Seed default colour groups; preserve everything else.
+
+        - File absent → write a fresh ``graph.json`` with the defaults.
+        - File present, ``reset=False`` → leave it alone (don't trash customised groups).
+        - File present, ``reset=True`` → replace only ``colorGroups``; keep other
+          settings (display/forces/scale) so Obsidian doesn't reset your view.
+        """
+        graph_json = self.output_dir / ".obsidian" / "graph.json"
+        if graph_json.exists() and not reset:
+            return
+        graph_json.parent.mkdir(parents=True, exist_ok=True)
+        cfg: dict = {}
+        if graph_json.exists():
+            try:
+                cfg = json.loads(graph_json.read_text())
+            except json.JSONDecodeError:
+                cfg = {}
+        cfg["colorGroups"] = list(self.DEFAULT_COLOR_GROUPS)
+        graph_json.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
 
     def _generate_note(self, symbol: Symbol, graph: SymbolGraph):
         """Generate a markdown note for a symbol."""
@@ -89,6 +130,8 @@ class VaultGenerator:
             "changed": symbol.changed,
             "change_status": symbol.change_status,
             "change_diff": symbol.change_diff,
+            # Route/endpoint flag (Flask/FastAPI/Odoo).
+            "is_route": symbol.is_route,
         }
 
         # Choose template based on symbol kind

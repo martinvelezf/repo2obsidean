@@ -3,7 +3,7 @@ name: VaultGenerator._generate_odoo_report
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 121
+line: 164
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

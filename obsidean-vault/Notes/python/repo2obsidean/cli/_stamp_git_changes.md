@@ -3,7 +3,7 @@ name: _stamp_git_changes
 kind: function
 language: python
 file: repo2obsidean/cli.py
-line: 119
+line: 124
 tags: [code, python, function]
 aliases:
   - _stamp_git_changes

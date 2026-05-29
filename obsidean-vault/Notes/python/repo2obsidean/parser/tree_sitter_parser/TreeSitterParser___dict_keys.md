@@ -3,7 +3,7 @@ name: TreeSitterParser._dict_keys
 kind: method
 language: python
 file: repo2obsidean/parser/tree_sitter_parser.py
-line: 210
+line: 271
 tags: [code, python, method]
 parent: "[[TreeSitterParser]]"
 aliases:

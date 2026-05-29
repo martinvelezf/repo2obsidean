@@ -3,7 +3,7 @@ name: VaultGenerator._setup_jinja
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 22
+line: 23
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

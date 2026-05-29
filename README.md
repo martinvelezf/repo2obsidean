@@ -31,7 +31,7 @@ pipx install repo2obsidean
 pip install "git+https://github.com/martinvelezf/repo2obsidean.git"
 
 # From a built wheel (offline):
-pipx install dist/repo2obsidean-0.1.1-py3-none-any.whl
+pipx install dist/repo2obsidean-*.whl
 
 # From source, editable, for development:
 python3 -m venv venv && source venv/bin/activate
@@ -108,15 +108,42 @@ aren't marked. Disable with `--no-git`.
 > new files only count once they are `git add`-ed (an untracked file hidden by
 > `.gitignore` will not be detected).
 
+#### Grouping & filtering by symbol type
+
+Every note is tagged by what it is, so you can colour or filter the graph by
+kind out of the box. Each symbol carries `#class`, `#method`, or `#function`,
+edited symbols get `#changed`, and HTTP handlers get `#route`, auto-detected
+across languages:
+
+- **Python** — decorators: Flask `@app.route`, FastAPI `@app.get`/`@router.post`,
+  Odoo `@http.route`/`@route`.
+- **Go** — registration calls: `http.HandleFunc`, gin/echo/chi/fiber `r.GET`,
+  `r.POST`, … (the referenced handler function is tagged, even cross-file).
+- **JavaScript** — Express: `app.get('/x', handler)`, `router.post(...)`.
+
+Anonymous inline handlers are skipped (no named symbol to tag).
+
+The vault ships a default `.obsidian/graph.json` with ready-made colour groups:
+
+| Group query | Colour | Matches |
+|---|---|---|
+| `tag:#changed` | red | changed since git HEAD |
+| `tag:#route` | orange | HTTP route handlers |
+| `tag:#class` | blue | classes |
+| `tag:#method` | purple | methods |
+| `tag:#function` | green | free functions |
+
+These appear automatically on first open. Add/edit groups in **Graph view →
+Filters → Groups**; your changes are preserved across regenerations (the
+default file is only written when none exists). Use the **Search files…** box
+with the same queries (e.g. `tag:#route`) to filter instead of colour.
+
 #### Seeing changes in Obsidian's Graph view
 
-Changed symbols light up in the graph once you add a colour group keyed on the
-`#changed` tag:
-
-1. Open **Graph view** → **Filters → Groups → New group**.
-2. Query: `tag:#changed` — pick a bright colour (e.g. red).
-3. Reload Obsidian after regenerating (`Ctrl/Cmd+P → "Reload app without
-   saving"`) so it re-reads the freshly tagged notes.
+Changed symbols light up in red via the seeded `tag:#changed` group. If you ever
+need to recreate it: **Graph view → Filters → Groups → New group**, query
+`tag:#changed`. After regenerating, reload Obsidian (`Ctrl/Cmd+P → "Reload app
+without saving"`) so it re-reads the freshly tagged notes.
 
 ![Animated obsidean graph with changed symbols pulsing red](docs/graph-changed.gif)
 
@@ -238,7 +265,22 @@ repo2obsidean /path/to/requests --out /tmp/requests-vault
 ## Publishing to PyPI
 
 `pip install repo2obsidean` works by name only once the package is published to
-[PyPI](https://pypi.org). One-time setup, then a 3-step release:
+[PyPI](https://pypi.org). Every subsequent release is a one-liner:
+
+```bash
+scripts/release.py                           # default: auto-bump patch and publish
+scripts/release.py 0.2.0                     # or pass an explicit version
+scripts/release.py --bump minor              # auto-bump minor (or major)
+scripts/release.py --testpypi                # rehearse on TestPyPI first
+scripts/release.py --build-only              # bump + build only, skip upload
+```
+
+The script runs `pytest`, builds wheel + sdist, validates with `twine check`,
+prompts for confirmation, uploads, then commits + tags `v<version>`. Set your
+PyPI token via env (`TWINE_USERNAME=__token__ TWINE_PASSWORD=pypi-...`) or
+`~/.pypirc` — never commit the token.
+
+Or do it manually:
 
 ```bash
 # 0. one-time: create a PyPI account + an API token (pypi.org → Account → API tokens)

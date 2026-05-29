@@ -3,7 +3,7 @@ name: VaultGenerator._generate_note
 kind: method
 language: python
 file: repo2obsidean/generator/vault.py
-line: 66
+line: 107
 tags: [code, python, method]
 parent: "[[VaultGenerator]]"
 aliases:

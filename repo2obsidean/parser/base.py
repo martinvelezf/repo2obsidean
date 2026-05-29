@@ -50,6 +50,10 @@ class Symbol:
     odoo_inherit: list[str] = field(default_factory=list)
     odoo_inherits: list[str] = field(default_factory=list)
 
+    # True when a route/endpoint decorator was detected (Flask/FastAPI/Odoo, …).
+    # Tagged #route in the vault so HTTP handlers can be grouped/filtered.
+    is_route: bool = False
+
     # Git working-tree change metadata (stamped after parsing).
     # change_status: "" (unchanged) | "M" (modified) | "A" (added/untracked) | "D"
     # change_diff:   unified-diff hunks overlapping this symbol's line range
